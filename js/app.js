@@ -127,17 +127,14 @@
                         .attr('disabled', 'disabled');
 
                     function sendEmail() {
-                      	Email.send({
-                      	SecureToken: "02b9ac2b-310c-4d6e-a722-e51bb0b170cc",
-                      	To : 'jayanwana@gmail.com',
-                      	From : "muveapi@gmail.com",
-                      	Subject : "CV Contact",
-                      	Body : "Name: " + $('#name').val() + "/r/n"
-                        + "Email: " + $('#email').val() + "/r/n"
-                        + "Comment: " + $('#comments').val(),
-                      	}).then(
+                        emailjs.send("service_kl846fc","template_9a1vyth",{
+                          name: "Test",
+                          comment: "Hello World",
+                          reply_to: "muveapi@gmail.com",
+                        }).then(
                           function(data) {
-                              document.getElementById('message').innerHTML = data;
+                              if (data) document.getElementById('message').innerHTML = data;
+                              else document.getElementById('message').innerHTML = "Success";
                               $('#message').slideDown('slow');
                               $('#cform img.contact-loader').fadeOut('slow', function() {
                                   $(this).remove()
@@ -145,7 +142,7 @@
                               $('#submit').removeAttr('disabled');
                               if (data.match('success') != null) $('#cform').slideUp('slow');
                           }
-                      	);
+                      	).catch( error => console.log(error);)
                       }
                       sendEmail()
                     // $.post(action, {
