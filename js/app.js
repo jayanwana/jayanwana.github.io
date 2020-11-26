@@ -128,7 +128,7 @@
 
                     function sendEmail() {
                       	Email.send({
-                      	SecureToken: "02b9ac2b-310c-4d6e-a722-e51bb0b170cc",
+                      	SecureToken: "c2b47099-8549-4bd4-9481-851e1ec4d16e",
                       	To : 'jayanwana@gmail.com',
                       	From : "muveapi@gmail.com",
                       	Subject : "CV Contact",
