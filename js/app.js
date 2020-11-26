@@ -130,7 +130,7 @@
                       	Email.send({
                       	Host: "smtp.gmail.com",
                       	Username : "muveapi@gmail.com",
-                      	Password : "Coolart47a",
+                      	Password : "",
                       	To : 'jayanwana@gmail.com',
                       	From : "muveapi@gmail.com",
                       	Subject : "CV Contact",
