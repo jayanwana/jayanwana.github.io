@@ -128,9 +128,7 @@
 
                     function sendEmail() {
                       	Email.send({
-                      	Host: "smtp.gmail.com",
-                      	Username : "muveapi@gmail.com",
-                      	Password : "",
+                      	SecureToken: "02b9ac2b-310c-4d6e-a722-e51bb0b170cc",
                       	To : 'jayanwana@gmail.com',
                       	From : "muveapi@gmail.com",
                       	Subject : "CV Contact",
