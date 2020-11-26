@@ -7,7 +7,7 @@
 !function ($) {
     "use strict";
     var MainApp = function () {};
-   
+
         //===== ripples =====
 
         MainApp.prototype.initprofileRipple = function () {
@@ -16,11 +16,11 @@
                 resolution: 512,
                 dropRadius: 20, //px
                 perturbance: 0.04,
-            });            
+            });
         },
 
         //=====counter =====
-       
+
         MainApp.prototype.initCounter = function () {
             var a = 0;
             $(window).scroll(function() {
@@ -57,10 +57,10 @@
 
         MainApp.prototype.initFilter = function () {
             $(window).on('load', function() {
-            //PORTFOLIO FILTER 
+            //PORTFOLIO FILTER
             var $container = $('.projects-wrapper');
             var $filter = $('#filter');
-            // Initialize isotope 
+            // Initialize isotope
             $container.isotope({
                 filter: '*',
                 layoutMode: 'masonry',
@@ -99,7 +99,7 @@
                     enabled: true,
                     navigateByImgClick: true,
                     preload: [0, 1]
-                        // Will preload 0 - before current, and 1 after the current image 
+                        // Will preload 0 - before current, and 1 after the current image
                 }
             });
         },
@@ -107,7 +107,7 @@
          //===== magnific Popup =====
         MainApp.prototype.initPrint = function () {
             $('#lnkPrint').click(function(){
-                
+
                  window.print();
             });
         },
@@ -117,6 +117,7 @@
             $('#contact-form').submit(function() {
 
                 var action = $(this).attr('action');
+                var res = "<fieldset>" + "<div id='success_page'>"+"<h3>Email Sent Successfully.</h3>"+"<p class='text-muted'>Thank you <strong>$name</strong>, your message has been submitted to us.</p>"+"</div>"+"</fieldset>";
 
                 $("#message").slideUp(750, function() {
                     $('#message').hide();
@@ -125,26 +126,50 @@
                         .before('')
                         .attr('disabled', 'disabled');
 
-                    $.post(action, {
-                            name: $('#name').val(),
-                            email: $('#email').val(),
-                            comments: $('#comments').val(),
-                        },
-                        function(data) {
-                            document.getElementById('message').innerHTML = data;
-                            $('#message').slideDown('slow');
-                            $('#cform img.contact-loader').fadeOut('slow', function() {
-                                $(this).remove()
-                            });
-                            $('#submit').removeAttr('disabled');
-                            if (data.match('success') != null) $('#cform').slideUp('slow');
-                        }
-                    );
+                    function sendEmail() {
+                      	Email.send({
+                      	Host: "smtp.gmail.com",
+                      	Username : "muveapi@gmail.com",
+                      	Password : "Coolart47a",
+                      	To : 'jayanwana@gmail.com',
+                      	From : "muveapi@gmail.com",
+                      	Subject : "CV Contact",
+                      	Body : "Name: " + $('#name').val() + "/r/n"
+                        + "Email: " + $('#email').val() + "/r/n"
+                        + "Comment: " + $('#comments').val(),
+                      	}).then(
+                          function(data) {
+                              document.getElementById('message').innerHTML = data;
+                              $('#message').slideDown('slow');
+                              $('#cform img.contact-loader').fadeOut('slow', function() {
+                                  $(this).remove()
+                              });
+                              $('#submit').removeAttr('disabled');
+                              if (data.match('success') != null) $('#cform').slideUp('slow');
+                          }
+                      	);
+                      }
+                      sendEmail()
+                    // $.post(action, {
+                    //         name: $('#name').val(),
+                    //         email: $('#email').val(),
+                    //         comments: $('#comments').val(),
+                    //     },
+                    //     function(data) {
+                    //         document.getElementById('message').innerHTML = res;
+                    //         $('#message').slideDown('slow');
+                    //         $('#cform img.contact-loader').fadeOut('slow', function() {
+                    //             $(this).remove()
+                    //         });
+                    //         $('#submit').removeAttr('disabled');
+                    //         if (data.match('success') != null) $('#cform').slideUp('slow');
+                    //     }
+                    // );
                 });
                 return false;
             });
         },
-        
+
         MainApp.prototype.init = function () {
             this.initprofileRipple();
             this.initCounter();
@@ -162,4 +187,3 @@
         "use strict";
         $.MainApp.init();
     }(window.jQuery);
-
