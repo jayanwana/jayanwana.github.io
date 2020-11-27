@@ -116,8 +116,11 @@
         MainApp.prototype.initContact = function () {
             $('#contact-form').submit(function(event) {
                 event.preventDefault()
+                let name = $('#name').val();
+                let email = $('#email').val();
+                let comments = $('#comments').val();
                 var action = $(this).attr('action');
-                var res = "<fieldset>" + "<div id='success_page'>"+"<h3>Email Sent Successfully.</h3>"+"<p class='text-muted'>Thank you <strong>$name</strong>, your message has been submitted to us.</p>"+"</div>"+"</fieldset>";
+                var res = "<fieldset>" + "<div id='success_page'>"+"<h3>Email Sent Successfully.</h3>"+"<p class='text-muted'>Thank you <strong>" + name +"</strong>, your message has been submitted to us.</p>"+"</div>"+"</fieldset>";
                 $("#message").slideUp(750, function() {
                     $('#message').hide();
 
@@ -127,9 +130,9 @@
 
                     function sendEmail() {
                         emailjs.send("service_kl846fc","template_9a1vyth",{
-                          name: "Test",
-                          comment: "Hello World",
-                          reply_to: "muveapi@gmail.com",
+                          name: name,
+                          comment: comments,
+                          reply_to: email,
                         }).then(
                           function(data) {
                               if (data.status === 200) {
