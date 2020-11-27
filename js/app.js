@@ -114,11 +114,10 @@
 
         //===== contact =====
         MainApp.prototype.initContact = function () {
-            $('#contact-form').submit(function() {
-
+            $('#contact-form').submit(function(event) {
+                event.preventDefault()
                 var action = $(this).attr('action');
                 var res = "<fieldset>" + "<div id='success_page'>"+"<h3>Email Sent Successfully.</h3>"+"<p class='text-muted'>Thank you <strong>$name</strong>, your message has been submitted to us.</p>"+"</div>"+"</fieldset>";
-
                 $("#message").slideUp(750, function() {
                     $('#message').hide();
 
@@ -133,16 +132,21 @@
                           reply_to: "muveapi@gmail.com",
                         }).then(
                           function(data) {
-                              if (data) document.getElementById('message').innerHTML = data;
-                              else document.getElementById('message').innerHTML = "Success";
+                              if (data.status === 200) {
+                                document.getElementById('message').innerHTML = res;
+                              } else if (data.text) {
+                                document.getElementById('message').innerHTML = data.text;
+                              } else {
+                                document.getElementById('message').innerHTML = "An error occurred.";
+                              }
                               $('#message').slideDown('slow');
                               $('#cform img.contact-loader').fadeOut('slow', function() {
                                   $(this).remove()
                               });
                               $('#submit').removeAttr('disabled');
-                              if (data.match('success') != null) $('#cform').slideUp('slow');
+                              if (data.status === 200) $('#cform').slideUp('slow');
                           }
-                      	).catch( error => console.log(error);)
+                      	).catch( error => console.log(error))
                       }
                       sendEmail()
                     // $.post(action, {
